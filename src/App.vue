@@ -34,12 +34,9 @@ export default {
         var data = res.data;
         if (data.errno === ERR_OK) {
           this.seller = data.data;
-          console.log(this.seller);
         }
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(() => { });
   },
   components: {
     'v-header': header
