@@ -151,12 +151,50 @@
                         flex: 1
                         position: relative
                         top: -6px
-                        border-bottom: 1px solid rgba(255,255,255,0.2)
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.2)
                     .text
                         padding: 0 12px
                         box-sizing: border-box
                         font-size: 14px
                         font-weight: 700px
+                // 优惠信息的内容
+                .supports
+                    width: 80%
+                    margin: 0 auto
+                .support-item
+                    padding: 0 12px
+                    box-sizing: border-box
+                    margin-bottom: 12px
+                    font-size: 0
+                    &:last-child
+                        margin-bottom: 0
+                    .icon
+                        display: inline-block
+                        width: 16px
+                        height: 16px
+                        vertical-align: top
+                        margin-right: 6px
+                        background-size: 16px 16px
+                        background-repeat: no-repeat
+                        &.decrease
+                            bg-image('images/decrease_2')
+                        &.discount
+                            bg-image('images/discount_2')
+                        &.guarantee
+                            bg-image('images/guarantee_2')
+                        &.invoice
+                            bg-image('images/invoice_2')
+                        &.special
+                            bg-image('images/special_2')
+                    .text
+                        font-size: 12px
+                        line-height: 16px
+                // 商家的介绍
+                .bulletin
+                    width: 80%
+                    margin: 0 auto
+                    padding: 0 12px
+                    line-height: 24px
         .detail-close
             position: relative
             width: 32px
@@ -164,3 +202,12 @@
             margin: -64px auto 0 auto
             clear: both
             font-size: 32px
+    .fade-enter-active
+        animation: fade .5s 
+    .fade-leave-active
+        animation: fade .5s  reverse
+    @keyframes fade
+        0%
+            opacity: 0
+        100%
+            opacity: 1

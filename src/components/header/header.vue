@@ -67,58 +67,72 @@
       >
     </div>
     <!-- 弹出的描述-->
-    <div
-      class="detail"
-      v-show="detailShow"
-    >
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="name">
-            {{seller.name}}
-          </h1>
-          <!-- 星星评级 -->
-          <div class="star-wrapper">
-            <star
-              :size='48'
-              :score="4.6"
-            ></star>
-          </div>
-          <!-- 小标题 -->
-          <div class="title">
-            <div class="line"></div>
-            <div class="text">
-              这里是优惠信息
+    <transition name="fade">
+      <div
+        class="detail"
+        v-show="detailShow"
+      >
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="name">
+              {{seller.name}}
+            </h1>
+            <!-- 星星评级 -->
+            <div class="star-wrapper">
+              <star
+                :size='48'
+                :score="4.6"
+              ></star>
             </div>
-            <div class="line"></div>
-          </div>
-          <!-- 信息 -->
-          <ul
-            v-if="seller.supports"
-            class="supports"
-          >
-            <li
-              class="support-item"
-              v-for="(item, index) in seller.supports"
-              :key="index"
+            <!-- 小标题 -->
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">
+                这里是优惠信息
+              </div>
+              <div class="line"></div>
+            </div>
+            <!-- 信息 -->
+            <ul
+              v-if="seller.supports"
+              class="supports"
             >
-              <span
-                class="icon"
-                :class="classMap[seller.supports[index].type]"
-              ></span>
-              <span class="text">
-                {{item.description}}
-              </span>
-            </li>
-          </ul>
+              <li
+                class="support-item"
+                v-for="(item, index) in seller.supports"
+                :key="index"
+              >
+                <span
+                  class="icon"
+                  :class="classMap[seller.supports[index].type]"
+                ></span>
+                <span class="text">
+                  {{item.description}}
+                </span>
+              </li>
+            </ul>
+            <!-- 商家公告 -->
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">
+                商家公告
+              </div>
+              <div class="line"></div>
+            </div>
+            <!-- 商家介绍 -->
+            <div class="bulletin">
+              {{seller.bulletin}}
+            </div>
+          </div>
+        </div>
+        <div
+          class="detail-close"
+          @click="hideDetail()"
+        >
+          <i class="icon-close"></i>
         </div>
       </div>
-      <div
-        class="detail-close"
-        @click="hideDetail()"
-      >
-        <i class="icon-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -133,7 +147,7 @@ export default {
   // }
   data () {
     return {
-      detailShow: true
+      detailShow: false
     };
   },
   props: ['seller'],
