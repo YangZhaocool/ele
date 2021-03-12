@@ -1,0 +1,166 @@
+@import '../../common/stylus/mixin.styl'
+.Header
+    color: #fff
+    position: relative
+    background: rgba(7, 17, 27, 0.5)
+    overflow: hidden
+    // 内容
+    .content-wrapper
+        padding: 24px 12px 18px 24px
+        box-sizing: border-box
+        font-size: 0
+        position: relative
+        .avatar, .content
+            display: inline-block
+            vertical-align: top
+        .avatar img
+            border-radius: 2px
+        .content
+            margin-left: 16px
+            // font-size: 14px
+        .title
+            margin: 2px 0 8px 0
+            .brand
+                width: 30px
+                height: 18px
+                vertical-align: top
+                display: inline-block
+                bg-image('images/brand')
+                background-size: 30px 18px
+            .name
+                margin-left: 6px
+                font-size: 16px
+                line-height: 18px
+                font-weight: bold
+        .description
+            margin-bottom: 10px
+            line-height: 12px
+            font-size: 12px
+        .supports
+            .icon
+                display: inline-block
+                width: 12px
+                height: 12px
+                margin-right: 4px
+                background-size: 12px
+                vertical-align: top
+                background-repeat: no-repeat
+                &.decrease
+                    bg-image('images/decrease_1')
+                &.discount
+                    bg-image('images/discount_1')
+                &.guarantee
+                    bg-image('images/guarantee_1')
+                &.invoice
+                    bg-image('images/invoice_1')
+                &.special
+                    bg-image('images/special_1')
+            .text
+                display: inline-block
+                font-size: 10px
+        .support-count
+            position: absolute
+            right: 12px
+            bottom: 18px
+            padding: 0 8px
+            line-height: 24px
+            height: 24px
+            border-radius: 14px
+            background: rgba(255, 255, 255, 0.2)
+            text-align: center
+            .count
+                vertical-align: top
+                font-size: 10px
+            .icon-keyboard_arrow_right
+                margin-left: 2px
+                font-size: 10px
+                line-height: 24px
+    // 公告
+    .bulletin-wrapper
+        height: 28px
+        line-height: 28px
+        padding: 0 22px 0 12px
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+        position: relative
+        background: rgba(7, 17, 27, 0.2)
+        .bulletin-title
+            display: inline-block
+            width: 22px
+            height: 12px
+            margin-top: 8px
+            bg-image('images/bulletin')
+            background-size: 22px 12px
+            vertical-align: top
+        .bulletin-text
+            vertical-align: top
+            margin: 0 4px
+            font-size: 10px
+        .icon
+            position: absolute
+            font-size: 10px
+            right: 12px
+            top: 8px
+    // 背景
+    .background
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        z-index: -1
+        filter: blur(10px)
+    // 弹出层
+    .detail
+        position: fixed
+        z-index: 100
+        width: 100%
+        height: 100%
+        overflow: auto
+        background: rgba(7, 17, 27, 0.8)
+        top: 0
+        left: 0
+        .detail-wrapper
+            min-height: 100%
+            width: 100%
+            .detail-main
+                margin-top: 64px
+                padding-bottom: 64px
+                box-sizing: border-box
+                .name
+                    line-height: 16px
+                    text-align: center
+                    font-size: 16px
+                    font-weight: 700
+                // 星星评级
+                .star-wrapper
+                    padding: 2px 0
+                    box-sizing: border-box
+                    margin: 0 auto
+                    margin-top: 18px
+                    margin-bottom: 20px
+                    text-align: center
+                // 小标题
+                .title
+                    width: 80%
+                    margin: 30px auto 24px auto
+                    display: flex
+                    .line
+                        flex: 1
+                        position: relative
+                        top: -6px
+                        border-bottom: 1px solid rgba(255,255,255,0.2)
+                    .text
+                        padding: 0 12px
+                        box-sizing: border-box
+                        font-size: 14px
+                        font-weight: 700px
+        .detail-close
+            position: relative
+            width: 32px
+            height: 32px
+            margin: -64px auto 0 auto
+            clear: both
+            font-size: 32px
