@@ -67,8 +67,7 @@
                 <div class="price">
                   <span class="now">
                     ￥{{food.price}}
-                  </span>
-                  <span
+                  </span><span
                     v-show="food.oldPrice"
                     class="old"
                   >
@@ -85,7 +84,7 @@
 </template>
 
 <script>
-import { BScroll } from 'better-scroll';
+import BScroll from '@better-scroll/core';
 const ERR_OK = 0;
 export default {
   name: 'Goods',
