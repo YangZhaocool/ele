@@ -1,3 +1,9 @@
+这是一个vue练手的外卖页面
+
+
+
+
+
 # elme
 
 > A takeout platform developed based on Vue
