@@ -10,6 +10,8 @@
           v-for="(item, index) in goods"
           :key="index"
           class="menu-item"
+          :class="{'current':currentIndex===index}"
+          @click="selectMenu(index,$event)"
         >
           <span class="text">
             <span
@@ -32,6 +34,7 @@
         <li
           v-for="(item,index) in goods"
           :key="index"
+          class="food-list-hook"
         >
           <h1 class=title>
             {{item.name}}
@@ -91,17 +94,33 @@ export default {
   props: ['seller'],
   data () {
     return {
-      goods: []
+      goods: [],
+      listHeight: [],
+      scrollY: 0
     };
+  },
+  computed: {
+    currentIndex () {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height1 = this.listHeight[i];
+        let height2 = this.listHeight[i + 1];
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          return i;
+        }
+      }
+      return 0;
+    }
   },
   created () {
     this.axios.get('/api/goods/')
       .then(res => {
         if (res.data.errno === ERR_OK) {
           this.goods = res.data.data;
-          console.log(this.goods);
           this.$nextTick(() => {
+            // 滚动
             this._initScroll();
+            // 计算高度
+            this._calculateHeight();
           });
         }
       })
@@ -113,12 +132,37 @@ export default {
   methods: {
     _initScroll () {
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
-
+        click: true
       });
       this.foodScroll = new BScroll(this.$refs.foodWrapper, {
-
+        probeType: 3
       });
+      this.foodScroll.on('scroll', (pro) => {
+        this.scrollY = Math.abs(Math.round(pro.y));
+        // console.log(this.scrollY);
+      });
+    },
+    _calculateHeight () {
+      let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+      let height = 0;
+      this.listHeight.push(height);
+      for (let i = 0; i < foodList.length; i++) {
+        let item = foodList[i];
+        height += item.clientHeight;
+        this.listHeight.push(height);
+      }
+    },
+    selectMenu (index, event) {
+      console.log(index);
+      let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+      let el = foodList[index];
+      this.foodScroll.scrollToElement(el, 300);
+      if (!event.constructed) {
+        // eslint-disable-next-line no-useless-return
+        return;
+      }
     }
+
   }
 };
 </script>
