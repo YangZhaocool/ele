@@ -77,6 +77,9 @@
                     ￥{{food.oldPrice}}
                   </span>
                 </div>
+                <div class="cartcontrol-warpper">
+                  <cartcontrol :food='food'></cartcontrol>
+                </div>
               </div>
             </li>
           </ul>
@@ -84,6 +87,7 @@
       </ul>
     </div>
     <shopcart
+      :selcet-foods="selcetFoods"
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice"
     ></shopcart>
@@ -93,6 +97,7 @@
 <script>
 import BScroll from '@better-scroll/core';
 import shopcart from '../shopcart/shopcat';
+import cartcontrol from '../cartcontrol/cartcontrol';
 const ERR_OK = 0;
 export default {
   name: 'Goods',
@@ -114,6 +119,18 @@ export default {
         }
       }
       return 0;
+    },
+    selcetFoods () {
+      let foods = [];
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
+          if (food.count) {
+            foods.push(food);
+          }
+        });
+      });
+      console.log(foods);
+      return foods;
     }
   },
   created () {
@@ -140,7 +157,8 @@ export default {
         click: true
       });
       this.foodScroll = new BScroll(this.$refs.foodWrapper, {
-        probeType: 3
+        probeType: 3,
+        click: true
       });
       this.foodScroll.on('scroll', (pro) => {
         this.scrollY = Math.abs(Math.round(pro.y));
@@ -170,7 +188,8 @@ export default {
 
   },
   components: {
-    shopcart
+    shopcart,
+    cartcontrol
   }
 };
 </script>

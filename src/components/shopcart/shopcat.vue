@@ -5,18 +5,18 @@
         <div class="logo-warpper">
           <div
             class="logo"
-            :class="{'high':totalCont > 0}"
+            :class="{'high':totalCount > 0}"
           >
             <i
               class="icon-shopping_cart"
-              :class="{'high':totalCont>0}"
+              :class="{'high':totalCount>0}"
             ></i>
           </div>
           <div
             class="num"
-            v-show="totalCont>0"
+            v-show="totalCount>0"
           >
-            {{totalCont}}
+            {{totalCount}}
           </div>
         </div>
         <div
@@ -44,14 +44,14 @@
 export default {
   //   props: ['deliveryPrice', 'minPrice']
   props: {
-    selectFoods: {
+    selcetFoods: {
       type: Array,
       default () {
-        // return [];
-        return [{
-          price: 0,
-          count: 0
-        }];
+        return [];
+        // return [{
+        //   price: 0,
+        //   count: 0
+        // }];
       }
     },
     deliveryPrice: {
@@ -64,18 +64,18 @@ export default {
     }
   },
   computed: {
+
     totalPrice () {
       let total = 0;
-      this.selectFoods.forEach(food => {
-        total = food.price * food.count;
+      this.selcetFoods.forEach((food) => {
+        total += food.price * food.count;
       });
-      console.log(total);
       return total;
     },
-    totalCont () {
+    totalCount () {
       let count = 0;
-      this.selectFoods.forEach(food => {
-        count = food.count;
+      this.selcetFoods.forEach((food) => {
+        count += food.count;
       });
       return count;
     },
