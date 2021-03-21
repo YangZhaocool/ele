@@ -83,11 +83,16 @@
         </li>
       </ul>
     </div>
+    <shopcart
+      :delivery-price="seller.deliveryPrice"
+      :min-price="seller.minPrice"
+    ></shopcart>
   </div>
 </template>
 
 <script>
 import BScroll from '@better-scroll/core';
+import shopcart from '../shopcart/shopcat';
 const ERR_OK = 0;
 export default {
   name: 'Goods',
@@ -163,6 +168,9 @@ export default {
       }
     }
 
+  },
+  components: {
+    shopcart
   }
 };
 </script>
