@@ -78,7 +78,10 @@
                   </span>
                 </div>
                 <div class="cartcontrol-warpper">
-                  <cartcontrol :food='food'></cartcontrol>
+                  <cartcontrol
+                    :food='food'
+                    v-on:cart-add="cartAdd"
+                  ></cartcontrol>
                 </div>
               </div>
             </li>
@@ -90,6 +93,7 @@
       :selcet-foods="selcetFoods"
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice"
+      ref="shopcart"
     ></shopcart>
   </div>
 </template>
@@ -129,7 +133,7 @@ export default {
           }
         });
       });
-      console.log(foods);
+      // console.log(foods);
       return foods;
     }
   },
@@ -184,13 +188,23 @@ export default {
         // eslint-disable-next-line no-useless-return
         return;
       }
+    },
+    cartAdd (el) {
+      // dom元素更新后执行， 因此此处能正确打印出更改之后的值；
+      this.$nextTick(() => {
+        this.$refs['shopcart'].drop(el);// 调用shopcart组件的drop()函数
+      });
     }
-
   },
   components: {
     shopcart,
     cartcontrol
   }
+  // events: {
+  //   'car.add' (targer) {
+  //     this._drop(targer);
+  //   }
+  // }
 };
 </script>
 
