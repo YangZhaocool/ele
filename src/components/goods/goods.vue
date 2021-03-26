@@ -44,6 +44,7 @@
               v-for="(food, index) in item.foods"
               :key="index"
               class="food-item"
+              @click="selcetFood(food,$event)"
             >
               <div class="icon">
                 <img
@@ -80,7 +81,7 @@
                 <div class="cartcontrol-warpper">
                   <cartcontrol
                     :food='food'
-                    v-on:cart-add="cartAdd"
+                    @add="addFood"
                   ></cartcontrol>
                 </div>
               </div>
@@ -89,19 +90,29 @@
         </li>
       </ul>
     </div>
+    <!-- 商品详情 -->
+    <Food
+      :food="selcetedFood"
+      ref="food"
+      @add="addFood"
+    ></Food>
+    <!-- 购物车 -->
     <shopcart
       :selcet-foods="selcetFoods"
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice"
       ref="shopcart"
     ></shopcart>
+
   </div>
+
 </template>
 
 <script>
 import BScroll from '@better-scroll/core';
 import shopcart from '../shopcart/shopcat';
 import cartcontrol from '../cartcontrol/cartcontrol';
+import Food from '../food/food.vue';
 const ERR_OK = 0;
 export default {
   name: 'Goods',
@@ -110,7 +121,8 @@ export default {
     return {
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selcetedFood: {}
     };
   },
   computed: {
@@ -156,6 +168,15 @@ export default {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
   },
   methods: {
+    addFood (target) {
+      this._drop(target);
+    },
+    _drop (target) {
+      // 体验优化,异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target);
+      });
+    },
     _initScroll () {
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
         click: true
@@ -180,25 +201,33 @@ export default {
       }
     },
     selectMenu (index, event) {
-      console.log(index);
-      let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
-      let el = foodList[index];
-      this.foodScroll.scrollToElement(el, 300);
-      if (!event.constructed) {
+      if (!event._constructed) {
         // eslint-disable-next-line no-useless-return
         return;
       }
+      let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+      let el = foodList[index];
+      this.foodScroll.scrollToElement(el, 300);
     },
     cartAdd (el) {
       // dom元素更新后执行， 因此此处能正确打印出更改之后的值；
       this.$nextTick(() => {
         this.$refs['shopcart'].drop(el);// 调用shopcart组件的drop()函数
       });
+    },
+    selcetFood (food, event) {
+      if (!event._constructed) {
+        // eslint-disable-next-line no-useless-return
+        return;
+      }
+      this.selcetedFood = food;
+      this.$refs.food.show();
     }
   },
   components: {
     shopcart,
-    cartcontrol
+    cartcontrol,
+    Food
   }
   // events: {
   //   'car.add' (targer) {

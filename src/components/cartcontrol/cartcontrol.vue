@@ -3,7 +3,7 @@
     <div
       class="cart-decrease icon-remove_circle_outline"
       v-show="food.count>0"
-      @click="decreaseCount"
+      @click.stop.prevent="decreaseCount"
     ></div>
     <div
       class="cart-count"
@@ -13,7 +13,7 @@
     </div>
     <div
       class="cart-add icon-add_circle"
-      @click="addCart"
+      @click.stop.prevent="addCart"
     ></div>
   </div>
 </template>
@@ -37,7 +37,9 @@ export default {
       } else {
         this.food.count++;
       }
-      this.$emit('cart-add', event.target);
+      console.log('点击了加号');
+      // this.$emit('add', event.target);
+      this.$emit('add', event.target);
     },
     decreaseCount (event) {
       if (!event._constructed) {

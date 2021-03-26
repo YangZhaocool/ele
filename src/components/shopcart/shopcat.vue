@@ -1,4 +1,3 @@
-/* eslint-disable vue/no-side-effects-in-computed-properties */
 <template>
   <div class="shopcart">
     <!-- 购物车的内容 -->
@@ -36,6 +35,7 @@
         <div
           class="pay"
           :class="payClass"
+          @click.stop.prevent="check"
         >
           <!-- ￥{{minPrice}}起送 -->
           {{payDesc}}
@@ -98,14 +98,22 @@
                 </span>
               </div>
               <div class="cartcontrol-warpper">
-                <cartcontrol :food="food"></cartcontrol>
+                <cartcontrol
+                  :food="food"
+                  @add="addFood"
+                ></cartcontrol>
               </div>
             </li>
           </ul>
         </div>
       </div>
     </transition>
+    <div
+      class="list-mask"
+      v-show="listShow"
+    ></div>
   </div>
+
 </template>
 
 <script>
@@ -206,10 +214,11 @@ export default {
       }
       return show;
     }
+    // eslint-disable-next-line vue/return-in-computed-property
+
   },
   methods: {
     drop (el) {
-      // console.log(el);
       for (let index = 0; index < this.balls.length; index++) {
         const ball = this.balls[index];
         // console.log('element: ', ball);
@@ -221,6 +230,7 @@ export default {
         }
       }
     },
+
     beforeEnter (el) {
       let count = this.balls.length;
       while (count--) {
@@ -266,7 +276,7 @@ export default {
     },
     toggleList () {
       if (!this.totalCount) {
-        console.log(111);
+        /// console.log(111);
         return;
       }
       this.fold = !this.fold;
@@ -275,6 +285,12 @@ export default {
       this.selcetFoods.forEach((food) => {
         food.count = 0;
       });
+    },
+    addFood (target) {
+      this.drop(target);
+    },
+    check () {
+      /// alert(1);
     }
   },
   components: {
