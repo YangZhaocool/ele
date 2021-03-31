@@ -13,27 +13,38 @@
         <router-link to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view :seller="seller" />
+    <keep-alive>
+      <router-view :seller="seller" />
+    </keep-alive>
   </div>
 </template>
 
 <script>
 import header from './components/header/header';
+import { urlParse } from './common/js/url';
 const ERR_OK = 0;
 
 export default {
   name: 'App',
   data () {
     return {
-      seller: {}
+      seller: {
+        id: (() => {
+          let queryParam = urlParse();
+          // console.log('queryParam: ', queryParam);
+          return queryParam.id;
+        })()
+      }
     };
   },
   created () {
-    this.axios.get('/api/seller')
+    this.axios.get('/api/seller?id=' + this.seller.id)
       .then(res => {
         var data = res.data;
         if (data.errno === ERR_OK) {
-          this.seller = data.data;
+          // this.seller = data.data;
+          this.seller = Object.assign({}, this.seller, data.data);
+          console.log(this.seller.id);
         }
       })
       .catch(() => { });
